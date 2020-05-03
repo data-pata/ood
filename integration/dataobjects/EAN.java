@@ -1,4 +1,4 @@
-package integration;
+package integration.dataobjects;
 
 // add constraints to code!
 // e.g. only 11 or 13 or whatever digits and no letters
@@ -25,12 +25,6 @@ public class EAN {
 
     @Override
     public boolean equals(Object obj) {
-        // if (obj == this) {
-        //     return true;
-        // }
-        // if (obj == null || obj.getClass() != this.getClass()) {
-        //     return false;
-        // }
         EAN otherEAN = (EAN) obj;
         return otherEAN.getCode().equals(this.getCode());
     }

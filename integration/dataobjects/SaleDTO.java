@@ -1,8 +1,6 @@
-package integration;
+package integration.dataobjects;
 
 import java.util.List;
-
-import model.LineItem;
 
 public class SaleDTO {
     private final double totalSum;
@@ -21,9 +19,4 @@ public class SaleDTO {
         return this.LineItemDTOList;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        return "";
-    }
 }

@@ -1,4 +1,4 @@
-package integration;
+package integration.dataobjects;
 
 public class Item {
 	private final EAN ean;

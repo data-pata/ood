@@ -1,8 +1,8 @@
 package model;
 
-import integration.EAN;
-import integration.Item;
-import integration.LineItemDTO;
+import integration.dataobjects.EAN;
+import integration.dataobjects.Item;
+import integration.dataobjects.LineItemDTO;
 
 public class LineItem {
     private final Item item;

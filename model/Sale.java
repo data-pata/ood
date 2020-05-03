@@ -1,55 +1,45 @@
 package model;
 
-import integration.EAN;
-import integration.Item;
-import integration.LineItemDTO;
-import integration.SaleDTO;
+import integration.dataobjects.EAN;
+import integration.dataobjects.Item;
+import integration.dataobjects.LineItemDTO;
+import integration.dataobjects.SaleDTO;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 
 public class Sale {
     private Map<EAN, LineItem> lineItems;
     private double runningTotal;
-    private int cashPaymentReceived;
 
     public Sale() {
         this.lineItems = new HashMap<EAN, LineItem>();
         this.runningTotal = 0.0;
-        this.cashPaymentReceived = 0;
+    }
+    
+    public void enterItem(Item item) {
+        if (this.hasItem(item))
+            this.incrementItemQuantity(item.getEAN());  
+        else
+            this.enterNewItem(item);
+        updateRunningTotal();
     }
 
-    boolean hasItem(EAN ean) {
-        return lineItems.containsKey(ean);
+    private boolean hasItem(Item item) {
+        return lineItems.containsKey(item.getEAN());
     }
 
-    void addNewItem(Item item) {
+    private void enterNewItem(Item item) {
         var newLineItem = new LineItem(item);
         var ean = item.getEAN();
         lineItems.put(ean, newLineItem);
-        updateRunningTotal();
     }
     
-    void incrementItemQuantity(EAN ean)  {
+    private void incrementItemQuantity(EAN ean)  {
         var item = lineItems.get(ean);
         item.incrementQuantity();
-        updateRunningTotal();
-    }
-
-    private void updateRunningTotal() {
-        var total = 0.0;
-        for (var lineItem : lineItems.values()) {
-            total += lineItem.getPriceIncludingVat();
-        }
-        runningTotal = total;
-    }
-
-    public Collection<LineItem> getLineItems() {
-        return this.lineItems.values();
     }
 
     /**
@@ -58,13 +48,25 @@ public class Sale {
     public double getRunningTotal() {
         return runningTotal;
     }
-
-    public double getTotalVat() {
+    
+    private double getTotalVat() {
         double totalVat = 0.0;
         for(var lineItem : getLineItems()) {
             totalVat += lineItem.getVatAmount();
         }
         return totalVat;
+    }
+
+    private void updateRunningTotal() {
+        var total = 0.0;
+        for (var lineItem : getLineItems()) {
+            total += lineItem.getPriceIncludingVat();
+        }
+        runningTotal = total;
+    }
+    
+    private Collection<LineItem> getLineItems() {
+        return this.lineItems.values();
     }
 
     public SaleDTO toDTO() {

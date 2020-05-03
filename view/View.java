@@ -1,12 +1,12 @@
 package view;
 
 import controller.Controller;
-import integration.EAN;
 import integration.NoSuchItemException;
+import integration.dataobjects.EAN;
 
 public class View {
 	private Controller ctrl;
-
+	
 	public View(Controller ctrl) {
 		this.ctrl = ctrl;
 		hardCodedInteraction();
@@ -24,7 +24,10 @@ public class View {
 		enterItem("8717418553401");
 
 		endSale();
+
+		enterCashPayment(200);
 		enterCashPayment(300);
+
 	}
 
 	private void startNewSale() {
@@ -58,13 +61,19 @@ public class View {
 
 	private void endSale() {
 		int total = ctrl.ringUpTotal();
-		String paymentPrompt = String.format("Att betala:	%d kr",total );
-		System.out.println(paymentPrompt);
+		System.out.println(String.format("Att betala:	%d kr",total ));
 	}
 
 	private void enterCashPayment(int cashAmount) {
-		int cashback = ctrl.enterPayment(cashAmount);
-		String cashbackPrompt = String.format("Tillbaka:	%d kr", cashback);
-		System.out.println(cashbackPrompt);
+		
+		try { 
+			int cashback = ctrl.pay(cashAmount);
+			System.out.println(String.format("Tillbaka:	%d kr", cashback));
+		} catch (IllegalArgumentException ex) {
+			System.out.println(ex.getMessage());
+			endSale();
+		}
+
+
 	}
 }

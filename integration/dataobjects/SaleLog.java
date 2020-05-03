@@ -1,23 +1,20 @@
-package model;
+package integration.dataobjects;
 
 import java.time.LocalDateTime;
-
-import integration.SaleDTO;
-import integration.StoreDTO;
 
 public class SaleLog {
     private final SaleDTO saleInfo;
     private final StoreDTO storeInfo;
     private final LocalDateTime timeOfSale;
 
-    public SaleLog(SaleDTO saleInfo, StoreDTO storeInfo, LocalDateTime timeOfSale) {
+    public SaleLog(SaleDTO saleInfo, StoreDTO storeInfo) {
         this.saleInfo = saleInfo;
         this.storeInfo = storeInfo;
-        this.timeOfSale = timeOfSale;
+        this.timeOfSale = LocalDateTime.now();
     }
 
     public SaleDTO getSaleInfo() {
-        return this.saleInfo;
+        return this.saleInfo;   
     }
 
     public StoreDTO getStoreInfo() {

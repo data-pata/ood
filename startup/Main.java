@@ -1,18 +1,15 @@
 package startup;
 
 import controller.Controller;
-import integration.ExtSysHandler;
-import model.CashRegister;
+import integration.IntegrationHandler;
 import view.View;
 
 public class Main {
     
     public static void main(String[] args) {
         
-        var extSysHandler = new ExtSysHandler();
-        var cashRegister = new CashRegister(3000);
-        var ctrl = new Controller(extSysHandler, cashRegister);
-        var view = new View(ctrl);
-        
+        var extSysHandler = new IntegrationHandler();
+        var ctrl = new Controller(extSysHandler);
+        new View(ctrl);
     }
 }

@@ -1,4 +1,4 @@
-package integration;
+package integration.dataobjects;
 
 public class StoreDTO {
     private final String storeName;

@@ -8,11 +8,15 @@ public class CashRegister {
         this.balance = balance;
     }
 
+    public void put(int amount) {
+        this.balance += amount;
+    }
+
     public int getBalance() {
         return this.balance;
     }
 
-    void setBalance(int balance) throws IllegalArgumentException {
+    public void setBalance(int balance) throws IllegalArgumentException {
         if(balance <= 0)
             throw new IllegalArgumentException(String.format("%d is not a valid balance amount", balance));
         this.balance = balance;

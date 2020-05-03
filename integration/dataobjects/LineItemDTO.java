@@ -1,5 +1,4 @@
-package integration;
-
+package integration.dataobjects;
 public class LineItemDTO {
     private final Item itemData;
     private final int itemQuantity;

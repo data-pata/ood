@@ -1,46 +1,56 @@
 package controller;
 
-import integration.EAN;
-import integration.ExtSysHandler;
+import integration.IntegrationHandler;
 import integration.NoSuchItemException;
+import integration.dataobjects.EAN;
+import integration.dataobjects.Item;
 import model.CashRegister;
-import model.Model;
+import model.Sale;
 
 public class Controller {
-	private ExtSysHandler extSysHandler;
-	private Model model;
+    private final CashRegister cashRegister;
+    private IntegrationHandler integrationsHandler;
+    private Sale sale;
 
-	public Controller(ExtSysHandler extSysHandler, CashRegister cashRegister) {
-		this.extSysHandler = extSysHandler;
-		model = new Model(extSysHandler, cashRegister);
-	}
+	public Controller(IntegrationHandler integrationHandler) {
+        this.integrationsHandler = integrationHandler;
+        this.cashRegister = new CashRegister(3000);
+    }
 
-	public void startNewSale() {
-		System.out.println("ctrl: starting new sale");
-		model.startNewSale(); 
-	}
+    public void startNewSale() {
+        System.out.println("ctrl: starting new sale");
+        this.sale = new Sale();
+    }
 
-	public String enterItem(EAN ean) throws NoSuchItemException {
-		// search for item in catalog first or check if ean already scanned first? 
-		// check if scanned first: u
-		// retrieve product from external system, returns
-		// try {
-		return model.enterItem(ean);
-			
-		// } catch (NoSuchItemException e) {
-			// throw e;
-		}
-	
-	public int ringUpTotal() {
-		return model.ringUpTotal();
-	}
+    public String enterItem(EAN ean) throws NoSuchItemException {
+        Item item = integrationsHandler.retrieveItemData(ean);
+        sale.enterItem(item);
+        return sale.toString();
+    }  
+    
+    public int pay(int amount) throws IllegalArgumentException  {
+        int total = ringUpTotal();
+        if(total > amount)
+            throw new IllegalArgumentException(String.format("Insufficient amount: %d", amount));
+        updateCashRegisterBalance();
+        logSale();
+        endSale();
+        return amount - total;
+    }
 
-	public int enterPayment(int amount) {
-		// makepayment
-		// logSale
-		// sendlogsaleto extsystems
-		// create receipt send to printer
-		return model.pay(amount);
-	}
+    private void updateCashRegisterBalance() {
+        cashRegister.put(ringUpTotal());
+    }
 
+    public int ringUpTotal() {
+        return (int) Math.round(sale.getRunningTotal());
+    }
+
+    private void logSale() {
+        integrationsHandler.logSale(this.sale.toDTO());
+    }
+
+    private void endSale() {
+        this.sale = null;
+    }
 }
