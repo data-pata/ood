@@ -19,9 +19,9 @@ public class View {
 		enterItem("7310090348139");		
 		enterItem("7340083440717"); // NoSuchItemException
 		enterItem("7300156486424");
-		enterItem("77315009042");
+		enterItem("77315009");
 		enterItem("8717418553401");
-
+		
 		endSale();
 
 		enterCashPayment(200);

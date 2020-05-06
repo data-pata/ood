@@ -7,8 +7,16 @@ package pos.integration.dataobjects;
 public class EAN {
     private final String code;
     
-    public EAN(String code) {
+    public EAN(String code) throws IllegalArgumentException {
+        validateEan(code);
         this.code = code;       
+    }
+
+    private void validateEan(String code) throws IllegalArgumentException {
+        int len = code.length();
+        if((len == 13 || len == 8) && code.matches("[0-9]+"))
+            return;
+        throw new IllegalArgumentException(String.format("%s is not a valid EAN", code));
     }
 
     /**
@@ -25,6 +33,8 @@ public class EAN {
 
     @Override
     public boolean equals(Object obj) {
+        if(obj == null || !(obj instanceof EAN))
+            return false;
         EAN otherEAN = (EAN) obj;
         return otherEAN.getCode().equals(this.getCode());
     }

@@ -26,7 +26,7 @@ public class Sale {
             this.enterNewItem(item);
         updateRunningTotal();
     }
-
+    
     private boolean hasItem(Item item) {
         return lineItems.containsKey(item.getEan());
     }

@@ -23,9 +23,19 @@ public class Controller {
     }
 
     public String enterItem(EAN ean) throws NoSuchItemException {
-        Item item = integrationsHandler.retrieveItemData(ean);
-        sale.enterItem(item);
-        return sale.toString();
+        if(sale == null) {
+            throw new IllegalStateException("Call to enterItem before starting new sale.");
+        }
+        if(sale.h
+
+        try {
+
+            Item item = integrationsHandler.retrieveItemData(ean);
+            sale.enterItem(item);
+            return sale.toString();
+        } catch() {
+
+        }
     }  
     
     public int pay(int amount) throws IllegalArgumentException  {

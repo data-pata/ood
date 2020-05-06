@@ -1,17 +1,15 @@
-package pos.controller;
+package pos.model;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import pos.model.Sale;
-
-public class ControllerTest {
+public class SaleTest {
     private Sale sale;
 
     @BeforeEach
     public void setUp() {
         this.sale = new Sale();
     }
-    
+
+
 
 }

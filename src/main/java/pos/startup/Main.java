@@ -11,9 +11,4 @@ public class Main {
         var ctrl = new Controller(integrationHandler);
         new View(ctrl).hardCodedInteraction();
     }
-
-    @Test 
-    public void mainTest() {
-
-    }
 }
