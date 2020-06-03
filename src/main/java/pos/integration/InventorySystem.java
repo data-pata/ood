@@ -29,13 +29,12 @@ public class InventorySystem {
     }
 
     Item retrieveItemData(EAN ean) throws NoSuchItemException {
-    
-        if( itemRegistry.containsKey(ean) ) {
+            
+            if( itemRegistry.containsKey(ean) ) {
             return itemRegistry.get(ean);
         }
         else {
-            throw new NoSuchItemException(
-                String.format("EAN %s was not found in the product catalog", ean));
+            throw new NoSuchItemException(ean);
         }
     }
 

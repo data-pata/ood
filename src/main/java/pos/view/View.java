@@ -1,26 +1,41 @@
 package pos.view;
 
+import java.io.IOException;
+
 import pos.controller.Controller;
+import pos.controller.OperationFailedException;
 import pos.integration.NoSuchItemException;
 import pos.integration.dataobjects.EAN;
+import pos.util.LogHandler;
 
 public class View {
 	private Controller ctrl;
-	
+	private LogHandler logHandler;
+	private TotalRevenueView revenueView;
+
 	public View(Controller ctrl) {
 		this.ctrl = ctrl;
+		this.revenueView = new TotalRevenueView();
+
+		try {
+			this.logHandler = new LogHandler();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 
 	public void hardCodedInteraction() {
 
 		startNewSale(); // return value? 
 
-		enterItem("7310090348139");
-		enterItem("7310090348139");		
-		enterItem("7340083440717"); // NoSuchItemException
-		enterItem("7300156486424");
-		enterItem("77315009");
-		enterItem("8717418553401");
+		enterItem("7310090348139"); 	// blandsaft EAN-13
+		enterItem("7310090348139");		// blandsaft
+		enterItem("7340083440717"); 	// EAN-kod finns ej i itemRegistry -> NoSuchItemException
+		enterItem("0000000000000");		// Scanning this EAN triggers the not connected Exception
+		enterItem("7300156486424", 3); 	// 3 st leverpastej
+		enterItem("77315009");			// dax wax EAN-8
+		enterItem("8717418553401"); 	// lejonkungen dvd
 		
 		endSale();
 
@@ -30,30 +45,47 @@ public class View {
 	}
 
 	private void startNewSale() {
-		ctrl.startNewSale(); 
+		printAction("STARTING NEW SALE");
+		ctrl.startNewSale();
+		ctrl.addSaleObserver(this.revenueView);
 	}
-		
-	private void enterItem(String itemID) {
+	private void enterItem(String itemId) {
+		enterItem(itemId, 1);
+	}
+	private void enterItem(String itemID, int quantity) {
+
 		//check if ID is 11 or 13 EAN number or 4 digit PLU
 		// create EAN and PLU objects to encapsulate id truthiness
 		// EAN and PLU could inherit or implement an abstract or interface?!  
 		// return error if wrong format
 		// else call ctrl with it - ctrl decides what to do next
+
+		printAction(String.format("ENTERING %d OF ITEM %s", quantity, itemID));
 		
 		try {
-
 			EAN ean = new EAN(itemID); 
-			System.out.println( ctrl.enterItem(ean) );
-			System.out.println("----------------------\n");
+			System.out.println( ctrl.enterItem(ean, quantity) );
+		}
+		
+		// NEW SALE NOT INITIATED
+		catch(IllegalStateException exc) {
+			System.out.println(exc.getMessage());
+		}
+
+		catch (OperationFailedException exc) {
+			System.out.println(exc.getMessage() + "\n Please try again.");
+			logHandler.logError(exc);
 		} 
-			// catch exception from EAN constructor
+		
+		// catch exception from EAN constructor
 			// if ean cannot be created the format of the identifier is wrong
 			// and results in a prompt to user
-		catch (NoSuchItemException e) { //NoSuchItemException
+		catch (NoSuchItemException exc) { //NoSuchItemException
 			// catch exception from itemRegistry if product not found
-			System.out.println(e.getMessage());
+			System.out.println(exc.getMessage());
+		}
+		finally {
 			System.out.println("----------------------\n");
-			return;
 		}
 		
 	}
@@ -69,10 +101,13 @@ public class View {
 			int cashback = ctrl.pay(cashAmount);
 			System.out.println(String.format("Tillbaka:	%d kr", cashback));
 		} catch (IllegalArgumentException ex) {
-			System.out.println(ex.getMessage());
+			System.out.println(String.format("Insufficient amount: %d", cashAmount));
 			endSale();
 		}
+	}
 
+	private void printAction(String string) {
+		System.out.printf("\n\n-=-=-=-=[%s]-=-=-=-=\n\n", string);
 
 	}
 }

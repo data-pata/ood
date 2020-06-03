@@ -19,7 +19,9 @@ public class LineItem {
     void incrementQuantity() {
         this.quantity++;
     }
-
+    void addQuantity(int qty) {
+        this.quantity += qty;
+    }
     void setQuantity(int quantity)  {
         this.quantity = quantity;
     }

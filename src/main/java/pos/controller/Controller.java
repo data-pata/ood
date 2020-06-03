@@ -1,51 +1,60 @@
 package pos.controller;
 
 import pos.integration.IntegrationHandler;
+import pos.integration.InventorySystemFailureException;
 import pos.integration.NoSuchItemException;
 import pos.integration.dataobjects.EAN;
 import pos.integration.dataobjects.Item;
 import pos.model.CashRegister;
 import pos.model.Sale;
+import pos.model.SaleObserver;
 
 public class Controller {
     private final CashRegister cashRegister;
-    private IntegrationHandler integrationsHandler;
+    private IntegrationHandler integrationHandler;
     private Sale sale;
 
 	public Controller(IntegrationHandler integrationHandler) {
-        this.integrationsHandler = integrationHandler;
+        this.integrationHandler = integrationHandler;
         this.cashRegister = new CashRegister(3000);
     }
 
     public void startNewSale() {
-        System.out.println("ctrl: starting new sale");
         this.sale = new Sale();
     }
 
-    public String enterItem(EAN ean) throws NoSuchItemException {
+    public String enterItem(EAN ean, int qty) throws NoSuchItemException, OperationFailedException {
         if(sale == null) {
             throw new IllegalStateException("Call to enterItem before starting new sale.");
         }
-        if(sale.h
-
-        try {
-
-            Item item = integrationsHandler.retrieveItemData(ean);
-            sale.enterItem(item);
-            return sale.toString();
-        } catch() {
-
+        if(sale.hasItem(ean)) {
+            sale.increaseQuantityBy(ean, qty);
         }
+        else {
+            try {
+                Item item = integrationHandler.retrieveItemData(ean);
+                sale.enterItem(item);
+
+            } catch(NoSuchItemException exc) { 
+              throw new OperationFailedException("Item not in inventory", exc);
+            }
+            catch (InventorySystemFailureException exc) {
+                throw new OperationFailedException("Inventory system is not responding", exc);
+            }
+        }
+        return sale.toString();
     }  
     
     public int pay(int amount) throws IllegalArgumentException  {
-        int total = ringUpTotal();
-        if(total > amount)
-            throw new IllegalArgumentException(String.format("Insufficient amount: %d", amount));
+        int change = sale.pay(amount);
         updateCashRegisterBalance();
         logSale();
         endSale();
-        return amount - total;
+        return change;
+    }
+    
+    public void addSaleObserver(SaleObserver saleObs) {
+        sale.addSaleObserver(saleObs);
     }
 
     private void updateCashRegisterBalance() {
@@ -57,7 +66,7 @@ public class Controller {
     }
 
     private void logSale() {
-        integrationsHandler.logSale(this.sale.toDTO());
+        integrationHandler.logSale(this.sale.toDTO());
     }
 
     private void endSale() {

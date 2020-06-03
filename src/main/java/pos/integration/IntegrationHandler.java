@@ -7,6 +7,7 @@ import pos.integration.dataobjects.SaleLog;
 import pos.integration.dataobjects.StoreDTO;
 
 public class IntegrationHandler {
+    private static final String ERROR_TRIGGER_EAN = "0000000000000";
     private final StoreDTO storeInfo;
     private final AccountingSystem accountingSystem;
     private final InventorySystem inventorySystem;
@@ -19,7 +20,11 @@ public class IntegrationHandler {
         this.receiptPrinter = new Printer();
     }    
 
-    public Item retrieveItemData(EAN ean) throws NoSuchItemException {
+    public Item retrieveItemData(EAN ean) throws NoSuchItemException, InventorySystemFailureException {
+        
+        if(ean.getCode() == ERROR_TRIGGER_EAN) {
+            throw new InventorySystemFailureException();
+        }
         return inventorySystem.retrieveItemData(ean);
     }
     

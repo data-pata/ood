@@ -2,7 +2,7 @@ package pos.integration.dataobjects;
 
 import java.time.LocalDateTime;
 
-public class SaleLog {
+public final class SaleLog {
     private final SaleDTO saleInfo;
     private final StoreDTO storeInfo;
     private final LocalDateTime timeOfSale;

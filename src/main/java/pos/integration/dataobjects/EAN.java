@@ -1,14 +1,10 @@
 package pos.integration.dataobjects;
 
-// add constraints to code!
-// e.g. only 11 or 13 or whatever digits and no letters
-// final and no setters for immutability
-
-public class EAN {
+public final class EAN {
     private final String code;
     
     public EAN(String code) throws IllegalArgumentException {
-        validateEan(code);
+        validateEan(code); 
         this.code = code;       
     }
 

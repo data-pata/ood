@@ -1,6 +1,6 @@
 package pos.integration.dataobjects;
 
-public class StoreDTO {
+public final class StoreDTO {
     private final String storeName;
     private final String street;
 

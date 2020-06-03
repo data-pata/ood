@@ -61,3 +61,25 @@ implementation decisions
     Testing with doubles note that for assertEquals: Equality imposed by this method is consistent with Double.equals(Object) and Double.compare(double, double).
     There is no handling of under-/overflow of doubles in the program. In Java, the double type is not like integers with wraparounds. Instead a big enough double will take on MAX_VALUE or MIN_VALUE and if increased or decreased even more take on the value POSITIVE_INFINITY or NEGATIVE_INFINITY. The two latter ones are kinds of NaN.
     Anyways the amounts allowed are > 0 and <= 10e9, just too stay of the edge. If, against assumption, this program would be used at a rich people store or with a lowly rated currency and a sale would rack up to over a billion that may be handled then.  
+
+    - Dataobjects in integration is okay according to course material. 
+    - Name of dataobject classes EAN, Item and SaleLog  
+
+    - Stateful implementation! => updating running total ie state all the time instead of calculating on demand?!
+    
+    - Item is a DTO however it has an aggregated getter so FIX IF I HAVE TIME
+
+
+SEM 4 
+    
+    Custom checked exceptions are thrown. This is because (1) A client is expected to recover from the errors and (2) they are both predictable AND unpreventable. See https://stackoverflow.com/a/19061110/12754381 .
+
+    The controller catches and wraps exceptions from the integrationHandler in a OperationFailedException. The controller adds messages that are printed by the view. This breaks the separation of concerns: Only the view should decide how output is formated. However the user must be informed if the item identifier (EAN) is missing from the inventory. This solution is in other words a trade off. At least, the original NoSuchItemException isn't propagated from the integration to the view layer. There may be other more elegant solutions to this problem, alas I am out of time. 
+    
+    Finally, the rest of the bullets have uppfyllda.   
+
+    A logHandler class in a util package outside the other layers is instantiated by the view. It's method logError is called "...when an exception is caught, and that exception indicates the program is not functioning as intended." ie when the Inventory System isn't responding. The other exceptions are not.
+    
+     
+    keep the saleobservers in sale class in case more controllers are introduced!
+    

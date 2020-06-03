@@ -2,7 +2,7 @@ package pos.integration.dataobjects;
 
 import java.util.List;
 
-public class SaleDTO {
+public final class SaleDTO {
     private final double totalSum;
     private final List<LineItemDTO> LineItemDTOList;
 
