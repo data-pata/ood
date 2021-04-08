@@ -1,6 +1,7 @@
 .project
-notes
-.xml
+*.txt
+*.xml
 .vscode
 .settings
-
+target
+.classpath

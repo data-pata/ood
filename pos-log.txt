@@ -1,4 +1,4 @@
-Jun 3, 2020, 10:55:42 PM, Exception was thrown: Item not in inventory
+Apr 8, 2021, 11:51:08 AM, Exception was thrown: Item not in inventory
 pos.controller.OperationFailedException: Item not in inventory
 	at pos.controller.Controller.enterItem(Controller.java:39)
 	at pos.view.View.enterItem(View.java:67)
@@ -10,7 +10,7 @@ Caused by: pos.integration.NoSuchItemException: No Item for EAN 7340083440717 ex
 	at pos.integration.IntegrationHandler.retrieveItemData(IntegrationHandler.java:28)
 	at pos.controller.Controller.enterItem(Controller.java:35)
 	... 4 more
-Jun 3, 2020, 10:55:48 PM, Exception was thrown: Inventory system is not responding
+Apr 8, 2021, 11:51:08 AM, Exception was thrown: Inventory system is not responding
 pos.controller.OperationFailedException: Inventory system is not responding
 	at pos.controller.Controller.enterItem(Controller.java:42)
 	at pos.view.View.enterItem(View.java:67)
