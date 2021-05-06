@@ -23,7 +23,12 @@ public class Controller {
     public void startNewSale()  {
         this.sale = new Sale();
     }
-
+    /** 
+     * @param ean
+     * @param qty
+     * @return String
+     * @throws OperationFailedException
+     */
     public String enterItem(EAN ean, int qty) throws OperationFailedException {
         if(sale == null) {
             throw new IllegalStateException("Start new sale before entering item.");
@@ -40,6 +45,12 @@ public class Controller {
         return sale.toString(); 
     }
 
+    
+    /** 
+     * @param ean
+     * @return Item
+     * @throws OperationFailedException
+     */
     private Item getItemDataFromIntegration(EAN ean) throws OperationFailedException {
         try {
             Item item = integrationHandler.retrieveItemData(ean);
@@ -51,6 +62,12 @@ public class Controller {
         }
     }
 
+    
+    /** 
+     * @param amount
+     * @return int
+     * @throws InsufficientPaymentException
+     */
     public int pay(int amount) throws InsufficientPaymentException  {
         int change = sale.pay(amount);
         addToCashRegister(amount - change);
@@ -59,14 +76,26 @@ public class Controller {
         return change;
     }
     
+    
+    /** 
+     * @param saleObs
+     */
     public void addSaleObserver(SaleObserver saleObs) {
         sale.addSaleObserver(saleObs);
     }
 
+    
+    /** 
+     * @param amount
+     */
     private void addToCashRegister(int amount) {
         cashRegister.put(amount);
     }
 
+    
+    /** 
+     * @return double
+     */
     public double ringUpTotal() {
         return sale.getRunningTotal();
     }
@@ -79,12 +108,24 @@ public class Controller {
         this.sale = null;
     }
 
+    
+    /** 
+     * @return CashRegister
+     */
     public CashRegister getCashRegister() {
         return this.cashRegister;
     }
+    
+    /** 
+     * @return IntegrationHandler
+     */
     public IntegrationHandler getIntegrationHandler() {
         return this.integrationHandler;
     }
+    
+    /** 
+     * @return Sale
+     */
     public Sale getSale() {
         return this.sale;
     }
