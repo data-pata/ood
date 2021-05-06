@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pos.integration.dataobjects.EAN;
+import pos.integration.dataobjects.InvalidEanException;
 import pos.integration.dataobjects.Item;
 import pos.integration.dataobjects.SaleLog;
 
@@ -16,9 +17,16 @@ public class InventorySystem {
     }
     
     private void addItemtoRegistry(String eanCode, double priceExcludingVat, String itemDescription, double vatRate) {
-        var ean = new EAN(eanCode);
-        var item = new Item(ean, priceExcludingVat, itemDescription, vatRate);
-        this.itemRegistry.put(ean, item);
+        EAN ean;
+        try {
+            ean = new EAN(eanCode);
+            var item = new Item(ean, priceExcludingVat, itemDescription, vatRate);
+            this.itemRegistry.put(ean, item);
+        
+        } catch (InvalidEanException e) {
+            System.err.println(e.getMessage());
+            System.exit(-1);
+        } 
     }
 
     private void addItems() {
@@ -30,7 +38,7 @@ public class InventorySystem {
 
     Item retrieveItemData(EAN ean) throws NoSuchItemException {
         if(!itemRegistry.containsKey(ean)) 
-            throw new NoSuchItemException(ean);
+            throw new NoSuchItemException("No such item exists in the inventory", ean);
         return itemRegistry.get(ean);
     }
 

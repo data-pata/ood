@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pos.integration.NoSuchItemException;
 import pos.integration.dataobjects.EAN;
 import pos.integration.dataobjects.Item;
 import pos.integration.dataobjects.LineItemDTO;
@@ -25,31 +26,28 @@ public class Sale {
         this.runningTotal = 0.0;
     }
     
-    public void enterItem(Item item, int itemQty) {
-        var ean = item.getEan();
-        var lineItem = new LineItem(item, itemQty);
-        lineItems.put(ean, lineItem);
+    public SaleDTO enterItem(EAN ean, int itemQty) throws NoSuchItemException {
+        if(!hasItem(ean))
+            throw new NoSuchItemException("No such item data in current sale", ean); 
+        increaseQuantityBy(ean, itemQty);
         updateRunningTotal();
+        return this.toDTO();
+    }
+    
+    public SaleDTO enterNewItem(Item item, int itemQty) {
+        var newLineItem = new LineItem(item, itemQty);
+        var ean = item.getEan();
+        lineItems.put(ean, newLineItem);
+        updateRunningTotal();
+        return this.toDTO();
     }
 
-    public void increaseQuantityBy(EAN ean, int qty) {
+    private void increaseQuantityBy(EAN ean, int qty) {
         var lineItem = lineItems.get(ean);
         lineItem.addQuantity(qty);
     } 
-
-    public boolean hasItem(EAN ean) {
+    private boolean hasItem(EAN ean) {
         return lineItems.containsKey(ean);
-    }
-
-    private void enterNewItem(Item item) {
-        var newLineItem = new LineItem(item);
-        var ean = item.getEan();
-        lineItems.put(ean, newLineItem);
-    }
-    
-    private void incrementItemQuantity(EAN ean)  {
-        var item = lineItems.get(ean);
-        item.incrementQuantity();
     }
 
     /**
@@ -68,9 +66,6 @@ public class Sale {
             total += lineItem.getPriceIncludingVat();
         }
         runningTotal = total;
-    } 
-    private Collection<LineItem> getLineItems() {
-        return this.lineItems.values();
     }
 
     public int pay(int amountPaid) throws InsufficientPaymentException {
@@ -87,10 +82,21 @@ public class Sale {
     public void addSaleObserver(SaleObserver observer) {
         this.saleObservers.add(observer); 
     }
-    
     private void notifyObservers() {
         for(var observer : saleObservers)
             observer.updateTotalRevenue(getTotalPrice());
+    }
+
+    private double getTotalVat() {
+        double totalVat = 0.0;
+        for (var lineItem : getLineItems()) {
+            totalVat += lineItem.getVatAmount();
+        }
+        return totalVat;
+    }
+    
+    private Collection<LineItem> getLineItems() {
+        return this.lineItems.values();
     }
 
     public SaleDTO toDTO() {
@@ -110,15 +116,5 @@ public class Sale {
         } 
         sb.append(String.format("Total:  %.2f:- varav %.2f kr moms \n", getRunningTotal(), getTotalVat()));
         return sb.toString();
-    }
-    
-    private double getTotalVat() {
-        double totalVat = 0.0;
-        for(var lineItem : getLineItems()) {
-            totalVat += lineItem.getVatAmount();
-        }
-        return totalVat;
-    }
-
-    
+    }    
 }

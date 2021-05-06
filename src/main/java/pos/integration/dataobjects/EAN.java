@@ -1,18 +1,20 @@
 package pos.integration.dataobjects;
 
+import pos.integration.NoSuchItemException;
+
 public final class EAN {
     private final String code;
     
-    public EAN(String code) throws IllegalArgumentException {
+    public EAN(String code) throws InvalidEanException {
         validateEan(code); 
         this.code = code;       
     }
 
-    private void validateEan(String code) throws IllegalArgumentException {
+    private void validateEan(String code) throws InvalidEanException {
         int len = code.length();
         if((len == 13 || len == 8) && code.matches("[0-9]+"))
             return;
-        throw new IllegalArgumentException(String.format("%s is not a valid EAN", code));
+        throw new InvalidEanException(String.format("%s is not a valid EAN", code), code);
     }
 
     /**

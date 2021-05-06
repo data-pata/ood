@@ -25,27 +25,28 @@ public class Controller {
         this.sale = new Sale();
     }
 
-    public String enterItem(EAN ean, int qty) throws NoSuchItemException, OperationFailedException {
+    public String enterItem(EAN ean, int qty) throws OperationFailedException {
         if(sale == null) {
-            throw new IllegalStateException("Call to enterItem before starting new sale.");
+            throw new IllegalStateException("Start new sale before entering item.");
         }
-        if(sale.hasItem(ean)) {
-            sale.increaseQuantityBy(ean, qty);
-        }
-        else {
-            try {
-                Item item = integrationHandler.retrieveItemData(ean);
-                sale.enterItem(item, qty);
-
-            } catch(NoSuchItemException exc) { 
-              throw new OperationFailedException("Item not in inventory", exc);
-            }
-            catch (InventorySystemFailureException exc) {
-                throw new OperationFailedException("Inventory system is not responding", exc);
-            }
+        try {
+            sale.enterItem(ean, qty);
+        } catch (NoSuchItemException e) {
+            var itemData = getItemDataFromIntegration(ean);
+            sale.enterNewItem(itemData, qty);
         }
         return sale.toString(); 
-    }  
+    } 
+    private Item getItemDataFromIntegration(EAN ean) throws OperationFailedException {
+        try {
+            Item item = integrationHandler.retrieveItemData(ean);
+            return item;
+        } catch (NoSuchItemException exc) {
+            throw new OperationFailedException("Item not in inventory", exc);
+        } catch (InventorySystemFailureException exc) {
+            throw new OperationFailedException("Inventory system is not responding", exc);
+        }
+    }
     
     public int pay(int amount) throws InsufficientPaymentException  {
         int change = sale.pay(amount);

@@ -9,7 +9,7 @@ import pos.controller.OperationFailedException;
 
 import pos.integration.NoSuchItemException;
 import pos.integration.dataobjects.EAN;
-
+import pos.integration.dataobjects.InvalidEanException;
 import pos.util.LogHandler;
 
 public class View {
@@ -44,6 +44,7 @@ public class View {
 
 		enterCashPayment(200);
 		enterCashPayment(320);
+
 	}
 	private void startNewSale() {
 		printAction("STARTING NEW SALE");
@@ -78,14 +79,13 @@ public class View {
 		// catch exception from EAN constructor
 		// if ean cannot be created the format of the identifier is wrong
 		// and results in a prompt to user
-		catch (NoSuchItemException exc) { //NoSuchItemException
+		catch (InvalidEanException exc) { //NoSuchItemException
 			// catch exception from itemRegistry if product not found
 			System.out.println(exc.getMessage());
 		}
 		finally {
 			System.out.println("----------------------");
 		}
-		
 	}
 
 	private void endSale() {
