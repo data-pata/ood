@@ -1,4 +1,4 @@
-package pos.integration.dataobjects;
+package pos.dataobjects;
 
 public class InvalidEanException extends Exception {
     private final String eanCode;

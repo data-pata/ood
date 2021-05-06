@@ -1,4 +1,4 @@
-package pos.integration.dataobjects;
+package pos.dataobjects;
 public final class LineItemDTO {
     private final Item itemData;
     private final int itemQuantity;

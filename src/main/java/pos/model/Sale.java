@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pos.dataobjects.EAN;
+import pos.dataobjects.Item;
+import pos.dataobjects.LineItemDTO;
+import pos.dataobjects.SaleDTO;
 import pos.integration.NoSuchItemException;
-import pos.integration.dataobjects.EAN;
-import pos.integration.dataobjects.Item;
-import pos.integration.dataobjects.LineItemDTO;
-import pos.integration.dataobjects.SaleDTO;
 
 public class Sale {
     private Map<EAN, LineItem> lineItems;

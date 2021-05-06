@@ -1,11 +1,10 @@
 package pos.controller;
 
+import pos.dataobjects.EAN;
+import pos.dataobjects.Item;
 import pos.integration.IntegrationHandler;
 import pos.integration.InventorySystemFailureException;
 import pos.integration.NoSuchItemException;
-import pos.integration.dataobjects.EAN;
-import pos.integration.dataobjects.Item;
-
 import pos.model.CashRegister;
 import pos.model.Sale;
 import pos.model.SaleObserver;
@@ -29,6 +28,9 @@ public class Controller {
         if(sale == null) {
             throw new IllegalStateException("Start new sale before entering item.");
         }
+        if(qty < 1 || qty > 9999) {
+            throw new IllegalArgumentException("qty must be in range (1,9999)");
+        }
         try {
             sale.enterItem(ean, qty);
         } catch (NoSuchItemException e) {
@@ -36,7 +38,8 @@ public class Controller {
             sale.enterNewItem(itemData, qty);
         }
         return sale.toString(); 
-    } 
+    }
+
     private Item getItemDataFromIntegration(EAN ean) throws OperationFailedException {
         try {
             Item item = integrationHandler.retrieveItemData(ean);
@@ -47,7 +50,7 @@ public class Controller {
             throw new OperationFailedException("Inventory system is not responding", exc);
         }
     }
-    
+
     public int pay(int amount) throws InsufficientPaymentException  {
         int change = sale.pay(amount);
         addToCashRegister(amount - change);
@@ -74,5 +77,15 @@ public class Controller {
 
     private void endSale() {
         this.sale = null;
+    }
+
+    public CashRegister getCashRegister() {
+        return this.cashRegister;
+    }
+    public IntegrationHandler getIntegrationHandler() {
+        return this.integrationHandler;
+    }
+    public Sale getSale() {
+        return this.sale;
     }
 }

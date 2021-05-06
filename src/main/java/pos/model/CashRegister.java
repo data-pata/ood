@@ -4,7 +4,8 @@ public class CashRegister {
     private int balance;
 
     public CashRegister(int balance) {
-        // check that balance is >=0
+        if(balance < 0)
+            throw new IllegalArgumentException("Cash register balance may not be negative.");
         this.balance = balance;
     }
 

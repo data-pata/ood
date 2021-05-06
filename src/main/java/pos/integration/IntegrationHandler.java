@@ -1,10 +1,10 @@
 package pos.integration;
 
-import pos.integration.dataobjects.EAN;
-import pos.integration.dataobjects.Item;
-import pos.integration.dataobjects.SaleDTO;
-import pos.integration.dataobjects.SaleLog;
-import pos.integration.dataobjects.StoreDTO;
+import pos.dataobjects.EAN;
+import pos.dataobjects.Item;
+import pos.dataobjects.SaleDTO;
+import pos.dataobjects.SaleLog;
+import pos.dataobjects.StoreDTO;
 
 public class IntegrationHandler {
     private static final String ERROR_TRIGGING_EAN = "0000000000000";

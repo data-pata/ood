@@ -1,8 +1,8 @@
 package pos.model;
 
-import pos.integration.dataobjects.EAN;
-import pos.integration.dataobjects.Item;
-import pos.integration.dataobjects.LineItemDTO;
+import pos.dataobjects.EAN;
+import pos.dataobjects.Item;
+import pos.dataobjects.LineItemDTO;
 
 public class LineItem {
     private final Item item;

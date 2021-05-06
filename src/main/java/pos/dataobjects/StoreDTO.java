@@ -1,4 +1,4 @@
-package pos.integration.dataobjects;
+package pos.dataobjects;
 
 public final class StoreDTO {
     private final String storeName;

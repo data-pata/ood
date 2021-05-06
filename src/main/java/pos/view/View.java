@@ -6,10 +6,9 @@ import pos.model.InsufficientPaymentException;
 
 import pos.controller.Controller;
 import pos.controller.OperationFailedException;
-
+import pos.dataobjects.EAN;
+import pos.dataobjects.InvalidEanException;
 import pos.integration.NoSuchItemException;
-import pos.integration.dataobjects.EAN;
-import pos.integration.dataobjects.InvalidEanException;
 import pos.util.LogHandler;
 
 public class View {
@@ -20,7 +19,6 @@ public class View {
 	public View(Controller ctrl) {
 		this.ctrl = ctrl;
 		this.revenueView = new TotalRevenueView();
-
 		try {
 			this.logHandler = new LogHandler();
 		} catch (IOException e) {
@@ -55,7 +53,6 @@ public class View {
 		enterItem(itemId, 1);
 	}
 	private void enterItem(String itemID, int quantity) {
-
 		//check if ID is 11 or 13 EAN number or 4 digit PLU
 		// create EAN and PLU objects to encapsulate id truthiness
 		// EAN and PLU could inherit or implement an abstract or interface?!  
@@ -103,6 +100,6 @@ public class View {
 	}
 
 	private void printAction(String string) {
-		System.out.printf("\n-=-=-=-=[%s]-=-=-=-=\n\n", string);
+		System.out.printf("\n[%s]\n\n", string);
 	}
 }

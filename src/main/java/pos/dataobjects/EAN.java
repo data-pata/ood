@@ -1,4 +1,4 @@
-package pos.integration.dataobjects;
+package pos.dataobjects;
 
 import pos.integration.NoSuchItemException;
 

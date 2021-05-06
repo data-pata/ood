@@ -3,10 +3,10 @@ package pos.integration;
 import java.util.HashMap;
 import java.util.Map;
 
-import pos.integration.dataobjects.EAN;
-import pos.integration.dataobjects.InvalidEanException;
-import pos.integration.dataobjects.Item;
-import pos.integration.dataobjects.SaleLog;
+import pos.dataobjects.EAN;
+import pos.dataobjects.InvalidEanException;
+import pos.dataobjects.Item;
+import pos.dataobjects.SaleLog;
 
 public class InventorySystem {
     private Map<EAN, Item> itemRegistry;

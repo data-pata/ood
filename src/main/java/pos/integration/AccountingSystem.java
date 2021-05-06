@@ -1,6 +1,6 @@
 package pos.integration;
 
-import pos.integration.dataobjects.SaleLog;
+import pos.dataobjects.SaleLog;
 
 public class AccountingSystem {
 

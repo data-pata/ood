@@ -1,4 +1,4 @@
-package pos.integration.dataobjects;
+package pos.dataobjects;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;

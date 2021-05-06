@@ -1,7 +1,7 @@
 
 package pos.integration;
 
-import pos.integration.dataobjects.EAN;
+import pos.dataobjects.EAN;
 
 public class NoSuchItemException extends Exception {
     private final EAN noSuchItemEAN;
@@ -10,7 +10,7 @@ public class NoSuchItemException extends Exception {
         super(String.format(msg, noSuchItemEAN.getCode()));
         this.noSuchItemEAN = noSuchItemEAN;
     }
-    
+
     public EAN getNoSuchItemEAN() {
         return noSuchItemEAN;
     }

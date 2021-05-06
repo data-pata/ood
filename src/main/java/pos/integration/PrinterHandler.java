@@ -1,8 +1,8 @@
 package pos.integration;
 
-// import pos.integration.dataobjects.SaleDTO;
-import pos.integration.dataobjects.SaleLog;
 import java.time.format.DateTimeFormatter;
+
+import pos.dataobjects.SaleLog;
 
 public class PrinterHandler {
     
