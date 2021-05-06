@@ -26,9 +26,9 @@ public class TotalRevenueView implements SaleObserver {
         }
     
         private void printCurrentRevenue(){
-            System.out.println("=-=-= TOTAL REVENUE DISPLAY =-=-=");
+            System.out.println("\n=-=-= TOTAL REVENUE DISPLAY =-=-=");
             System.out.printf("=-=-=        %d          =-=-=\n", this.totalRevenue);
-            System.out.println("=-=-==-=-==-=-==-=-==-=-==-=-==-=");
+            System.out.println("=-=-==-=-==-=-==-=-==-=-==-=-==-=\n");
         }
     
     }

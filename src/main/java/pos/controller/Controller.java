@@ -5,21 +5,23 @@ import pos.integration.InventorySystemFailureException;
 import pos.integration.NoSuchItemException;
 import pos.integration.dataobjects.EAN;
 import pos.integration.dataobjects.Item;
+
 import pos.model.CashRegister;
 import pos.model.Sale;
 import pos.model.SaleObserver;
+import pos.model.InsufficientPaymentException;
 
 public class Controller {
     private final CashRegister cashRegister;
     private IntegrationHandler integrationHandler;
-    private Sale sale;
+    private Sale sale; 
 
 	public Controller(IntegrationHandler integrationHandler) {
         this.integrationHandler = integrationHandler;
         this.cashRegister = new CashRegister(3000);
     }
 
-    public void startNewSale() {
+    public void startNewSale()  {
         this.sale = new Sale();
     }
 
@@ -33,7 +35,7 @@ public class Controller {
         else {
             try {
                 Item item = integrationHandler.retrieveItemData(ean);
-                sale.enterItem(item);
+                sale.enterItem(item, qty);
 
             } catch(NoSuchItemException exc) { 
               throw new OperationFailedException("Item not in inventory", exc);
@@ -42,12 +44,12 @@ public class Controller {
                 throw new OperationFailedException("Inventory system is not responding", exc);
             }
         }
-        return sale.toString();
+        return sale.toString(); 
     }  
     
-    public int pay(int amount) throws IllegalArgumentException  {
+    public int pay(int amount) throws InsufficientPaymentException  {
         int change = sale.pay(amount);
-        updateCashRegisterBalance();
+        addToCashRegister(amount - change);
         logSale();
         endSale();
         return change;
@@ -57,12 +59,12 @@ public class Controller {
         sale.addSaleObserver(saleObs);
     }
 
-    private void updateCashRegisterBalance() {
-        cashRegister.put(ringUpTotal());
+    private void addToCashRegister(int amount) {
+        cashRegister.put(amount);
     }
 
-    public int ringUpTotal() {
-        return (int) Math.round(sale.getRunningTotal());
+    public double ringUpTotal() {
+        return sale.getRunningTotal();
     }
 
     private void logSale() {

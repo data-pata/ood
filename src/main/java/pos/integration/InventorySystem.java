@@ -29,13 +29,9 @@ public class InventorySystem {
     }
 
     Item retrieveItemData(EAN ean) throws NoSuchItemException {
-            
-            if( itemRegistry.containsKey(ean) ) {
-            return itemRegistry.get(ean);
-        }
-        else {
+        if(!itemRegistry.containsKey(ean)) 
             throw new NoSuchItemException(ean);
-        }
+        return itemRegistry.get(ean);
     }
 
     void update(SaleLog saleLog) {

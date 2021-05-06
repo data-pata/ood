@@ -2,10 +2,14 @@ package pos.view;
 
 import java.io.IOException;
 
+import pos.model.InsufficientPaymentException;
+
 import pos.controller.Controller;
 import pos.controller.OperationFailedException;
+
 import pos.integration.NoSuchItemException;
 import pos.integration.dataobjects.EAN;
+
 import pos.util.LogHandler;
 
 public class View {
@@ -24,7 +28,6 @@ public class View {
 			System.exit(1);
 		}
 	}
-
 	public void hardCodedInteraction() {
 
 		startNewSale(); // return value? 
@@ -40,15 +43,13 @@ public class View {
 		endSale();
 
 		enterCashPayment(200);
-		enterCashPayment(300);
-
+		enterCashPayment(320);
 	}
-
 	private void startNewSale() {
 		printAction("STARTING NEW SALE");
 		ctrl.startNewSale();
 		ctrl.addSaleObserver(this.revenueView);
-	}
+	}  
 	private void enterItem(String itemId) {
 		enterItem(itemId, 1);
 	}
@@ -66,48 +67,42 @@ public class View {
 			EAN ean = new EAN(itemID); 
 			System.out.println( ctrl.enterItem(ean, quantity) );
 		}
-		
 		// NEW SALE NOT INITIATED
 		catch(IllegalStateException exc) {
 			System.out.println(exc.getMessage());
 		}
-
 		catch (OperationFailedException exc) {
 			System.out.println(exc.getMessage() + "\n Please try again.");
 			logHandler.logError(exc);
 		} 
-		
 		// catch exception from EAN constructor
-			// if ean cannot be created the format of the identifier is wrong
-			// and results in a prompt to user
+		// if ean cannot be created the format of the identifier is wrong
+		// and results in a prompt to user
 		catch (NoSuchItemException exc) { //NoSuchItemException
 			// catch exception from itemRegistry if product not found
 			System.out.println(exc.getMessage());
 		}
 		finally {
-			System.out.println("----------------------\n");
+			System.out.println("----------------------");
 		}
 		
 	}
 
 	private void endSale() {
-		int total = ctrl.ringUpTotal();
+		int total = (int) Math.round(ctrl.ringUpTotal());
 		System.out.println(String.format("Att betala:	%d kr",total ));
 	}
 
 	private void enterCashPayment(int cashAmount) {
-		
 		try { 
 			int cashback = ctrl.pay(cashAmount);
 			System.out.println(String.format("Tillbaka:	%d kr", cashback));
-		} catch (IllegalArgumentException ex) {
-			System.out.println(String.format("Insufficient amount: %d", cashAmount));
-			endSale();
+		} catch (InsufficientPaymentException ex) {
+			System.out.println(String.format("Otillräcklig betalning: %d", ex.getamountPaid()));
 		}
 	}
 
 	private void printAction(String string) {
-		System.out.printf("\n\n-=-=-=-=[%s]-=-=-=-=\n\n", string);
-
+		System.out.printf("\n-=-=-=-=[%s]-=-=-=-=\n\n", string);
 	}
 }

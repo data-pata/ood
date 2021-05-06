@@ -1,23 +1,23 @@
-Apr 8, 2021, 11:51:08 AM, Exception was thrown: Item not in inventory
+May 6, 2021, 3:37:04 PM, Exception was thrown: Item not in inventory
 pos.controller.OperationFailedException: Item not in inventory
-	at pos.controller.Controller.enterItem(Controller.java:39)
-	at pos.view.View.enterItem(View.java:67)
-	at pos.view.View.enterItem(View.java:53)
-	at pos.view.View.hardCodedInteraction(View.java:34)
+	at pos.controller.Controller.enterItem(Controller.java:41)
+	at pos.view.View.enterItem(View.java:68)
+	at pos.view.View.enterItem(View.java:54)
+	at pos.view.View.hardCodedInteraction(View.java:37)
 	at pos.startup.Main.main(Main.java:12)
 Caused by: pos.integration.NoSuchItemException: No Item for EAN 7340083440717 exists in the inventory
-	at pos.integration.InventorySystem.retrieveItemData(InventorySystem.java:37)
+	at pos.integration.InventorySystem.retrieveItemData(InventorySystem.java:33)
 	at pos.integration.IntegrationHandler.retrieveItemData(IntegrationHandler.java:28)
-	at pos.controller.Controller.enterItem(Controller.java:35)
+	at pos.controller.Controller.enterItem(Controller.java:37)
 	... 4 more
-Apr 8, 2021, 11:51:08 AM, Exception was thrown: Inventory system is not responding
+May 6, 2021, 3:37:04 PM, Exception was thrown: Inventory system is not responding
 pos.controller.OperationFailedException: Inventory system is not responding
-	at pos.controller.Controller.enterItem(Controller.java:42)
-	at pos.view.View.enterItem(View.java:67)
-	at pos.view.View.enterItem(View.java:53)
-	at pos.view.View.hardCodedInteraction(View.java:35)
+	at pos.controller.Controller.enterItem(Controller.java:44)
+	at pos.view.View.enterItem(View.java:68)
+	at pos.view.View.enterItem(View.java:54)
+	at pos.view.View.hardCodedInteraction(View.java:38)
 	at pos.startup.Main.main(Main.java:12)
 Caused by: pos.integration.InventorySystemFailureException
 	at pos.integration.IntegrationHandler.retrieveItemData(IntegrationHandler.java:26)
-	at pos.controller.Controller.enterItem(Controller.java:35)
+	at pos.controller.Controller.enterItem(Controller.java:37)
 	... 4 more

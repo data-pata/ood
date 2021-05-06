@@ -25,9 +25,8 @@ public class Sale {
         this.runningTotal = 0.0;
     }
     
-    public void enterItem(Item item) {
+    public void enterItem(Item item, int itemQty) {
         var ean = item.getEan();
-        var itemQty = 1;
         var lineItem = new LineItem(item, itemQty);
         lineItems.put(ean, lineItem);
         updateRunningTotal();
@@ -69,17 +68,18 @@ public class Sale {
             total += lineItem.getPriceIncludingVat();
         }
         runningTotal = total;
-    }
+    } 
     private Collection<LineItem> getLineItems() {
         return this.lineItems.values();
     }
 
-
-    public int pay(int amountPaid) throws IllegalArgumentException {
-        if(getTotalPrice() > amountPaid)
-            throw new IllegalArgumentException();
+    public int pay(int amountPaid) throws InsufficientPaymentException {
+        int amountToPay = getTotalPrice();
+        if(getTotalPrice() > amountPaid) {
+            throw new InsufficientPaymentException(amountPaid, amountToPay);
+        }
         this.amountPaid = amountPaid;
-        this.change = amountPaid - getTotalPrice();
+        this.change = amountPaid - amountToPay;
         notifyObservers();
         return this.change;
     }
@@ -93,14 +93,13 @@ public class Sale {
             observer.updateTotalRevenue(getTotalPrice());
     }
 
-
     public SaleDTO toDTO() {
         var numOfLineItems = lineItems.size();
         var lineItemDTOList = new ArrayList<LineItemDTO>(numOfLineItems);
         for(var lineItem : lineItems.values()) {
             lineItemDTOList.add(new LineItemDTO(lineItem.getItem(), lineItem.getQuantity()));
         }
-        return new SaleDTO(this.runningTotal, lineItemDTOList);
+        return new SaleDTO(this.runningTotal, lineItemDTOList, this.getTotalVat());
     } 
 
     @Override
@@ -112,6 +111,7 @@ public class Sale {
         sb.append(String.format("Total:  %.2f:- varav %.2f kr moms \n", getRunningTotal(), getTotalVat()));
         return sb.toString();
     }
+    
     private double getTotalVat() {
         double totalVat = 0.0;
         for(var lineItem : getLineItems()) {

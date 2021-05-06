@@ -12,7 +12,7 @@ public final class LineItemDTO {
         return this.itemData;
     }
 
-    public double getItemQuantity() {
+    public int getItemQuantity() {
         return this.itemQuantity;
     }
 
