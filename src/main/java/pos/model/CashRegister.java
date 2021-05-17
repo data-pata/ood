@@ -2,8 +2,8 @@ package pos.model;
 
 /**
  * This class represents a cash register in the POS system. It is instantiated
- * with a balance and throws IllegalArgumentException when a negative or zero
- * balance is set
+ * with a balance and throws IllegalArgumentException when a negative balance is
+ * set.
  */
 public class CashRegister {
     private int balance;
@@ -32,20 +32,18 @@ public class CashRegister {
         return this.balance;
     }
 
-    
     /**
      * Sets the balance.
      * 
      * @param balance new amount in the register.
-     * @throws IllegalArgumentException when a negative or zero balance is set.
+     * @throws IllegalArgumentException when a negative balance is set.
      */
     public void setBalance(int balance) throws IllegalArgumentException {
-        if(balance <= 0)
+        if(balance < 0)
             throw new IllegalArgumentException(String.format("%d is not a valid balance amount", balance));
         this.balance = balance;
     }
 
-    
     /** 
      * A string represantation.
      * @return String

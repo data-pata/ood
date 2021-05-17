@@ -48,7 +48,7 @@ public class Item {
 	 * @return double	price including VAT.
 	 */
 	public double getPriceIncludingVat() {
-		return getPrice()+getPrice()*getVatRate();
+		return getPrice() + (getPrice()*getVatRate());
 	}
 
 	/** 

@@ -1,4 +1,4 @@
-package pos.integration;
+package pos.dataobjects;
 
 public class Amount {
     private double amount;
@@ -7,7 +7,6 @@ public class Amount {
         setAmount(amount);
     }
 
-    
     /** 
      * @param amount
      * @throws IllegalArgumentException

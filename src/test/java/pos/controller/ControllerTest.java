@@ -100,7 +100,7 @@ public class ControllerTest {
     @Test
     public void testPayThrowsInsufficientFundsError() {
         try {
-            var total = ctrlWithItems.getSale().getRunningTotalRounded();
+            var total = (int) Math.round(ctrlWithItems.getSale().getRunningTotal());
             ctrlWithItems.pay(total - 25);
             fail("Doesnt throw exception");
         } catch (InsufficientPaymentException e) {
@@ -109,7 +109,7 @@ public class ControllerTest {
     @Test
     public void testPayReturnsCorrectChange() {
         try {
-            var total = ctrlWithItems.getSale().getRunningTotalRounded();
+            var total = (int) Math.round( ctrlWithItems.getSale().getRunningTotal() );
             var change = ctrlWithItems.pay(total+25);
             assertEquals(25, change, "paid returns wrong change");
         } catch (InsufficientPaymentException e) {
@@ -119,7 +119,7 @@ public class ControllerTest {
     @Test
     public void testPayEndsSale() {
         try {
-            var total = ctrlWithItems.getSale().getRunningTotalRounded();
+            var total = (int) Math.round(ctrlWithItems.getSale().getRunningTotal());
             ctrlWithItems.pay(total);
             assertNull(ctrlWithItems.getSale(), "paid in full but sale isn't nullified");
         } catch (InsufficientPaymentException e) {

@@ -67,7 +67,6 @@ public class Controller {
         return sale.toString(); 
     }
 
-    
     /** 
      * @param ean
      * @return Item

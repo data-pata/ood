@@ -10,7 +10,6 @@ public final class LineItemDTO {
     private final Item itemData;
     private final int itemQuantity;
 
-    
     public LineItemDTO(LineItem lineItem) {
         this(lineItem.getItem(), lineItem.getQuantity());
     }

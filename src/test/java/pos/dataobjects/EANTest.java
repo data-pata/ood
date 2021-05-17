@@ -10,7 +10,7 @@ public class EANTest {
     private EAN ean13;
     
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InvalidEanException {
         ean13 = new EAN("1234567891234");
     }
 
@@ -20,7 +20,7 @@ public class EANTest {
     }
 
     @Test
-    public void testLegalConstructorArgs() {
+    public void testLegalConstructorArgs() throws InvalidEanException {
         var ean13 = new EAN("1234567891234");
         var ean8 = new EAN("12345678");
 
@@ -31,7 +31,8 @@ public class EANTest {
     @Test
     public void testillegalConstructorArgThrowsExc() {
 
-        var expectedExcClass = IllegalArgumentException.class;
+        var expectedExcClass = InvalidEanException.class; 
+        
         Exception ex = assertThrows(expectedExcClass, () -> { 
             new EAN("");
         });
@@ -56,13 +57,13 @@ public class EANTest {
     }
     
     @Test
-    public void testEqualHash() {
+    public void testEqualHash() throws InvalidEanException {
         var otherEAN = new EAN(this.ean13.getCode());
         assertEquals(otherEAN.hashCode(), this.ean13.hashCode(),
             "same eancode gives different hashcode");
     }
     @Test
-    public void testNotEqualHash() {
+    public void testNotEqualHash() throws InvalidEanException {
         var otherStr13 = "1313131313131"; 
         var otherEan13 = new EAN(otherStr13);
         
@@ -75,13 +76,13 @@ public class EANTest {
     }
 
     @Test
-    public void testEqual() {
+    public void testEqual() throws InvalidEanException {
         var otherEAN = new EAN("1234567891234");
         assertTrue(this.ean13.equals(otherEAN),
             "Other EAN instance with the same code should be equal.");
     }
     @Test
-    public void testNotEqual() {
+    public void testNotEqual() throws InvalidEanException {
         var otherStr13 = "1313131313131"; 
         var otherEan13 = new EAN(otherStr13);
         

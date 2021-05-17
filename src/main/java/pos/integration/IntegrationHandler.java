@@ -5,6 +5,7 @@ import pos.dataobjects.Item;
 import pos.dataobjects.SaleDTO;
 import pos.dataobjects.SaleLog;
 import pos.dataobjects.StoreDTO;
+
 /**
  * This class is a controller and facade of the integration layer of the Store
  * POS system. It instantiates and initializes handlers for all external
@@ -17,7 +18,6 @@ import pos.dataobjects.StoreDTO;
  * @see PrinterHandler
  */
 public class IntegrationHandler {
-    private static final String ERROR_TRIGGING_EAN = "0000000000000";
     private final StoreDTO storeInfo;
     private final AccountingSystem accountingSystem;
     private final InventorySystem inventorySystem;
@@ -43,10 +43,6 @@ public class IntegrationHandler {
      * @throws InventorySystemFailureException  when the inventory system is failuring. 
      */
     public Item retrieveItemData(EAN ean) throws NoSuchItemException, InventorySystemFailureException {
-        
-        if(ean.getCode() == ERROR_TRIGGING_EAN) {
-            throw new InventorySystemFailureException();
-        }
         return inventorySystem.retrieveItemData(ean);
     }
     

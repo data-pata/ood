@@ -12,19 +12,16 @@ public class PrinterTest {
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
     
+    @Before
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+    }   
 
-@Before
-public void setUpStreams() {
-    System.setOut(new PrintStream(outContent));
-    System.setErr(new PrintStream(errContent));
-}   
-
-@After
-public void restoreStreams() {
-    System.setOut(originalOut);
-    System.setErr(originalErr);
-}
-
-    
+    @After
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
+    }
     
 }

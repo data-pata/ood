@@ -14,9 +14,10 @@ import pos.dataobjects.SaleLog;
  * the system. 
  */
 public class InventorySystem {
+    private static final String ERROR_TRIGGING_EAN = "0000000000000";
     private Map<EAN, Item> itemRegistry;
     
-    /**
+    /** 
      * Creates an InventorySystem instance.
      */
     public InventorySystem(){
@@ -30,8 +31,12 @@ public class InventorySystem {
      * @param ean   EAN object identifying the sought after item.
      * @return Item The sought-after item data object.
      * @throws NoSuchItemException if there is no item corresponding to the given EAN.
+     * @throws InventorySystemFailureException
      */
-    Item retrieveItemData(EAN ean) throws NoSuchItemException {
+    Item retrieveItemData(EAN ean) throws NoSuchItemException, InventorySystemFailureException {
+        if (ean.getCode() == ERROR_TRIGGING_EAN) {
+            throw new InventorySystemFailureException();
+        }
         if (!itemRegistry.containsKey(ean))
             throw new NoSuchItemException("No such item exists in the inventory", ean);
         return itemRegistry.get(ean);
