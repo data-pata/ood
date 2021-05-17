@@ -3,12 +3,23 @@ package pos.integration;
 import java.time.format.DateTimeFormatter;
 
 import pos.dataobjects.SaleLog;
-
+/**
+ * This is a mock class handling printers and printing format of connected
+ * devices. It recieves all data on a completed sale to format different
+ * receipts or other documents and prints them.
+ */
 public class PrinterHandler {
-    
-    public PrinterHandler() {
-    }
+    /**
+     * Creates a PrinterHandler instance.
+     */
+    public PrinterHandler() {}
 
+    
+    /** 
+     * Formats and prints a receipt (currently to standard out) according to
+     * predefined rules. 
+     * @param saleLog   all data on a completed sale. 
+     */
     void printReceipt(SaleLog saleLog) {
         var receipt = formatReceipt(saleLog);
         System.out.println("\n[Printing receipt...]");
@@ -33,6 +44,10 @@ public class PrinterHandler {
         return sb.toString();
     }
 
+    /** 
+     * @param saleLog
+     * @return String
+     */
     private String formatTime(SaleLog saleLog) {
         var timeOfSale = saleLog.getTimeOfSale();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");

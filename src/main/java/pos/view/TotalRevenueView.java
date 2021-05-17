@@ -3,8 +3,8 @@ package pos.view;
 import pos.model.SaleObserver;
 
 /**
-     * This view will display the total revenue, 
-     * updated after each finalized sale.
+     * This view will display the total revenue, updated after each finalized
+     * sale.
      */
 public class TotalRevenueView implements SaleObserver {
         private int totalRevenue = 0;

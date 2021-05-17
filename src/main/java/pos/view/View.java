@@ -10,12 +10,20 @@ import pos.dataobjects.EAN;
 import pos.dataobjects.InvalidEanException;
 import pos.integration.NoSuchItemException;
 import pos.util.LogHandler;
-
+/**
+ * This is a mockup of the main view and user interface of the POS system. All
+ * user interaction of the system goes through here. 
+ */
 public class View {
 	private Controller ctrl;
 	private LogHandler logHandler;
 	private TotalRevenueView revenueView;
-
+	
+	/**
+	 * Create a new View with connection to the given system controller.
+	 * 
+	 * @param ctrl	the controller of the system. 
+	 */
 	public View(Controller ctrl) {
 		this.ctrl = ctrl;
 		this.revenueView = new TotalRevenueView();
@@ -26,6 +34,9 @@ public class View {
 			System.exit(1);
 		}
 	}
+	/**
+	 * Runs an entire mock sale of hard coded interactions. 
+	 */
 	public void hardCodedInteraction() {
 
 		startNewSale(); // return value? 
@@ -49,9 +60,11 @@ public class View {
 		ctrl.startNewSale();
 		ctrl.addSaleObserver(this.revenueView);
 	}  
+
 	private void enterItem(String itemId) {
 		enterItem(itemId, 1);
 	}
+	
 	private void enterItem(String itemID, int quantity) {
 		//check if ID is 11 or 13 EAN number or 4 digit PLU
 		// create EAN and PLU objects to encapsulate id truthiness
@@ -99,6 +112,9 @@ public class View {
 		}
 	}
 
+	/** 
+	 * @param string
+	 */
 	private void printAction(String string) {
 		System.out.printf("\n[%s]\n\n", string);
 	}
