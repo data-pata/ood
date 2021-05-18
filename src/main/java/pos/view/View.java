@@ -10,6 +10,7 @@ import pos.dataobjects.EAN;
 import pos.dataobjects.InvalidEanException;
 import pos.integration.NoSuchItemException;
 import pos.util.LogHandler;
+import pos.util.TotalRevenueFileOutput;
 /**
  * This is a mockup of the main view and user interface of the POS system. All
  * user interaction of the system goes through here. 
@@ -18,7 +19,7 @@ public class View {
 	private Controller ctrl;
 	private LogHandler logHandler;
 	private TotalRevenueView revenueView;
-	
+
 	/**
 	 * Create a new View with connection to the given system controller.
 	 * 
@@ -27,6 +28,7 @@ public class View {
 	public View(Controller ctrl) {
 		this.ctrl = ctrl;
 		this.revenueView = new TotalRevenueView();
+
 		try {
 			this.logHandler = new LogHandler();
 		} catch (IOException e) {
@@ -34,6 +36,7 @@ public class View {
 			System.exit(1);
 		}
 	}
+	
 	/**
 	 * Runs an entire mock sale of hard coded interactions. 
 	 */
@@ -53,6 +56,14 @@ public class View {
 
 		enterCashPayment(200);
 		enterCashPayment(320);
+
+		startNewSale();
+
+		enterItem("7300156486424", 3); // 3 st leverpastej
+
+		endSale();
+		
+		enterCashPayment(120);
 
 	}
 	private void startNewSale() {

@@ -14,6 +14,7 @@ import java.time.format.FormatStyle;
 public class LogHandler {
     private static final String LOG_FILE = "pos-log.txt";
     private PrintWriter logWriter;
+    
     /**
      * Creates a new loghandler. 
      * @throws IOException

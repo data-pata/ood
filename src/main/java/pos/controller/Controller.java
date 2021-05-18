@@ -1,5 +1,7 @@
 package pos.controller;
 
+import java.io.IOException;
+
 import pos.dataobjects.EAN;
 import pos.dataobjects.Item;
 import pos.integration.IntegrationHandler;
@@ -8,6 +10,7 @@ import pos.integration.NoSuchItemException;
 import pos.model.CashRegister;
 import pos.model.Sale;
 import pos.model.SaleObserver;
+import pos.util.TotalRevenueFileOutput;
 import pos.model.InsufficientPaymentException;
 
 /**
@@ -23,22 +26,31 @@ import pos.model.InsufficientPaymentException;
  * execute successfully.
  */
 public class Controller {
+    private static final int INIT_CASH_REG_BALANCE = 2000;
+    
+    private Sale sale; 
     private final CashRegister cashRegister;
     private IntegrationHandler integrationHandler;
-    private Sale sale; 
+    private TotalRevenueFileOutput revenueLogger;
+    
     /**
-     * Sole constructor.  
-     * @param   integrationHandler  an interface to the integrationlayer
+     * Sole constructor of the controller class.
+     * 
+     * @param integrationHandler  an interface to the integrationlayer
+     * @param revenueLogger       observer which logs the total accumulated revenue to file 
      */
-	public Controller(IntegrationHandler integrationHandler) {
+	public Controller(IntegrationHandler integrationHandler, TotalRevenueFileOutput revenueLogger) {
         this.integrationHandler = integrationHandler;
-        this.cashRegister = new CashRegister(3000);
+        this.cashRegister = new CashRegister(INIT_CASH_REG_BALANCE);
+        this.revenueLogger = revenueLogger;
     }
+
     /**
      * Initializes a new sale.
      */
     public void startNewSale()  {
         this.sale = new Sale();
+        sale.addSaleObserver(revenueLogger);
     }
     
     /**

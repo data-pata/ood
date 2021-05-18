@@ -11,6 +11,7 @@ import pos.dataobjects.Item;
 import pos.dataobjects.LineItemDTO;
 import pos.dataobjects.SaleDTO;
 import pos.integration.NoSuchItemException;
+
 /**
  * This class represents an ongoing sale in the POS system. Consequently it
  * holds all lineitems of the sale and the runningtotal. As a
@@ -23,6 +24,7 @@ public class Sale {
     private int amountPaid;
     private int change;
     private  List<SaleObserver> saleObservers = new ArrayList<>();
+    
     /**
      * Creates a new instance of this class. Ready to keep track of a sale in
      * the POS system.

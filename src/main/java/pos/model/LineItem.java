@@ -27,7 +27,7 @@ public class LineItem {
      */
     public LineItem(Item item, int quantity) {
         this.item = item;
-        this.quantity = quantity;
+        this.setQuantity(quantity);
      }
     
     /** 
@@ -40,10 +40,12 @@ public class LineItem {
     
     /** 
      * Set the quantity of the item in this lineitem.
-     * @param quantity
+     * @param qty
      */
-    void setQuantity(int quantity)  {
-        this.quantity = quantity;
+    void setQuantity(int qty)  {
+        if (qty < 0)
+            throw new IllegalArgumentException("Quantity " + qty +", less than zero is now valid.");
+        this.quantity = qty;
     }
 
     /** 

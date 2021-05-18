@@ -1,25 +1,26 @@
-May 17, 2021, 12:01:08 PM, Exception was thrown: Item not in inventory
+May 18, 2021, 7:45:36 PM, Exception was thrown: Item not in inventory
 pos.controller.OperationFailedException: Item not in inventory
-	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:81)
-	at pos.controller.Controller.enterItem(Controller.java:64)
+	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:92)
+	at pos.controller.Controller.enterItem(Controller.java:76)
+	at pos.view.View.enterItem(View.java:89)
 	at pos.view.View.enterItem(View.java:75)
-	at pos.view.View.enterItem(View.java:57)
-	at pos.view.View.hardCodedInteraction(View.java:35)
-	at pos.startup.Main.main(Main.java:16)
+	at pos.view.View.hardCodedInteraction(View.java:48)
+	at pos.startup.Main.main(Main.java:24)
 Caused by: pos.integration.NoSuchItemException: No such item exists in the inventory
-	at pos.integration.InventorySystem.retrieveItemData(InventorySystem.java:36)
-	at pos.integration.IntegrationHandler.retrieveItemData(IntegrationHandler.java:50)
-	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:78)
+	at pos.integration.InventorySystem.retrieveItemData(InventorySystem.java:41)
+	at pos.integration.IntegrationHandler.retrieveItemData(IntegrationHandler.java:46)
+	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:89)
 	... 5 more
-May 17, 2021, 12:01:08 PM, Exception was thrown: Inventory system is not responding
+May 18, 2021, 7:45:36 PM, Exception was thrown: Inventory system is not responding
 pos.controller.OperationFailedException: Inventory system is not responding
-	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:83)
-	at pos.controller.Controller.enterItem(Controller.java:64)
+	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:94)
+	at pos.controller.Controller.enterItem(Controller.java:76)
+	at pos.view.View.enterItem(View.java:89)
 	at pos.view.View.enterItem(View.java:75)
-	at pos.view.View.enterItem(View.java:57)
-	at pos.view.View.hardCodedInteraction(View.java:36)
-	at pos.startup.Main.main(Main.java:16)
+	at pos.view.View.hardCodedInteraction(View.java:49)
+	at pos.startup.Main.main(Main.java:24)
 Caused by: pos.integration.InventorySystemFailureException
-	at pos.integration.IntegrationHandler.retrieveItemData(IntegrationHandler.java:48)
-	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:78)
+	at pos.integration.InventorySystem.retrieveItemData(InventorySystem.java:38)
+	at pos.integration.IntegrationHandler.retrieveItemData(IntegrationHandler.java:46)
+	at pos.controller.Controller.getItemDataFromIntegration(Controller.java:89)
 	... 5 more
