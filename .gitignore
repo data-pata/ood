@@ -8,3 +8,6 @@ target
 build
 .gradle
 lib
+
+!pos-log.txt
+!total-revenue-log.txt
