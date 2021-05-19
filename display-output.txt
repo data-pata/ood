@@ -1,0 +1,123 @@
+
+[STARTING NEW SALE]
+
+
+[ENTERING 1 OF ITEM 7310090348139]
+
+Blandsaft Jordgubb BOB 0,95 l            23.50:-
+      x 1  =  23.50:-
+Total:  23.50:- varav 2.52 kr moms 
+
+----------------------
+
+[ENTERING 1 OF ITEM 7310090348139]
+
+Blandsaft Jordgubb BOB 0,95 l            23.50:-
+      x 2  =  47.00:-
+Total:  47.00:- varav 5.04 kr moms 
+
+----------------------
+
+[ENTERING 1 OF ITEM 7340083440717]
+
+Item not in inventory
+ Please try again.
+----------------------
+
+[ENTERING 1 OF ITEM 0000000000000]
+
+Inventory system is not responding
+ Please try again.
+----------------------
+
+[ENTERING 3 OF ITEM 7300156486424]
+
+Leverpastej Gurka Svensk Coop. 200 GR    9.95:-
+      x 3  =  29.84:-
+Blandsaft Jordgubb BOB 0,95 l            23.50:-
+      x 2  =  47.00:-
+Total:  76.83:- varav 8.23 kr moms 
+
+----------------------
+
+[ENTERING 1 OF ITEM 77315009]
+
+Leverpastej Gurka Svensk Coop. 200 GR    9.95:-
+      x 3  =  29.84:-
+Blandsaft Jordgubb BOB 0,95 l            23.50:-
+      x 2  =  47.00:-
+Vax Wave & Groom Röd DAX. 99g.           49.90:-
+      x 1  =  49.90:-
+Total:  126.73:- varav 18.21 kr moms 
+
+----------------------
+
+[ENTERING 1 OF ITEM 8717418553401]
+
+Leverpastej Gurka Svensk Coop. 200 GR    9.95:-
+      x 3  =  29.84:-
+Blandsaft Jordgubb BOB 0,95 l            23.50:-
+      x 2  =  47.00:-
+Lejonkungen Walt Disney. 1st.            179.00:-
+      x 1  =  179.00:-
+Vax Wave & Groom Röd DAX. 99g.           49.90:-
+      x 1  =  49.90:-
+Total:  305.73:- varav 28.34 kr moms 
+
+----------------------
+Att betala:     306 kr
+Otillräcklig betalning: 200
+
+=-=-= TOTAL REVENUE DISPLAY =-=-=
+=-=-=        306          =-=-=
+=-=-==-=-==-=-==-=-==-=-==-=-==-=
+
+[Accounting System update successful]
+[Inventory System update successful]
+
+[Printing receipt...]
+==========================
+POOC
+PoocStreet
+19-05-2021 18:20:24
+Leverpastej Gurka Svensk Coop. 200 GR
+      x 3  =  9.95:-
+Blandsaft Jordgubb BOB 0,95 l
+      x 2  =  23.50:-
+Lejonkungen Walt Disney. 1st.
+      x 1  =  179.00:-
+Vax Wave & Groom Röd DAX. 99g.
+      x 1  =  49.90:-
+Total:  305.73:- varav 28.34 kr moms 
+==========================
+Tillbaka:       14 kr
+
+[STARTING NEW SALE]
+
+
+[ENTERING 3 OF ITEM 7300156486424]
+
+Leverpastej Gurka Svensk Coop. 200 GR    9.95:-
+      x 3  =  29.84:-
+Total:  29.84:- varav 3.20 kr moms 
+
+----------------------
+Att betala:     30 kr
+
+=-=-= TOTAL REVENUE DISPLAY =-=-=
+=-=-=        336          =-=-=
+=-=-==-=-==-=-==-=-==-=-==-=-==-=
+
+[Accounting System update successful]
+[Inventory System update successful]
+
+[Printing receipt...]
+==========================
+POOC
+PoocStreet
+19-05-2021 18:20:24
+Leverpastej Gurka Svensk Coop. 200 GR
+      x 3  =  9.95:-
+Total:  29.84:- varav 3.20 kr moms 
+==========================
+Tillbaka:       90 kr
